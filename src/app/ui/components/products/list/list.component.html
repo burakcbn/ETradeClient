@@ -3,7 +3,7 @@
     *ngFor="let product of products">
         <img src="../../../../../assets/delete.png" class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title">{{product.id}}</h5>
+            <h5 class="card-title">{{product.productName}}</h5>
             <p class="card-text">Fiyat: {{product.price | currency:'₺'}} <br> Stock: {{product.stock}}</p>
             <a href="#" class="btn btn-success">Sepete Ekle</a>
         </div>

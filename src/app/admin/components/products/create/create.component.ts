@@ -18,9 +18,10 @@ export class CreateComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  create(stock: HTMLInputElement, price: HTMLInputElement) {
+  create(productName:HTMLInputElement,stock: HTMLInputElement, price: HTMLInputElement) {
     this.show(SpinnerType.BallSpinClockwiseFadeRotating);
     const createProduct: CreateProduct = new CreateProduct();
+    createProduct.productName =productName.value;
     createProduct.stock = parseInt(stock.value);
     createProduct.price = parseFloat(price.value);
 
