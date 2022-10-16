@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ListProduct } from 'src/app/contracts/list_product';
 import { ProductService } from 'src/app/sevices/common/product.service';
 
@@ -9,19 +10,47 @@ import { ProductService } from 'src/app/sevices/common/product.service';
 })
 export class ListComponent implements OnInit {
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) { }
 
+  currentPageNo: number;
+  totalProductCount: number;
+  totalPageCount: number;
+  pageSize: number = 12;
+  pageList: number[] = [];
   products: ListProduct[];
-  async ngOnInit() {
-    const data: { count: number, products: ListProduct[] } = await this.productService.read(0, 12,
-      () => {
 
-      },
-      errorMessage => {
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(async params => {
 
-      })
+      this.currentPageNo = parseInt(params["pageNo"] ?? 1);
+      const data: { count: number, products: ListProduct[] } = await this.productService.read(this.currentPageNo - 1, this.pageSize,
+        () => {
 
-    this.products = data.products;
+        },
+        errorMessage => {
+
+        })
+
+      this.products = data.products;
+      this.totalProductCount = data.count;
+      this.totalPageCount = Math.ceil(this.totalProductCount / this.pageSize);
+
+      this.pageList = [];
+
+      if (this.currentPageNo - 3 <= 0)
+        for (let i = 1; i <= 7; i++) {
+          this.pageList.push(i);
+        }
+
+      else if (this.currentPageNo + 3 >= this.totalPageCount)
+        for (let i = this.totalPageCount - 6; i <= this.totalPageCount; i++) {
+          this.pageList.push(i);
+        }
+      else
+        for (let i = this.currentPageNo - 3; i <= this.currentPageNo + 3; i++) {
+          this.pageList.push(i);
+        }
+    })
   }
 
 }

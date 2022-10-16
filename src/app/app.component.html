@@ -21,9 +21,6 @@
                                 <a class="nav-link" routerLink="products">Ürünler</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" routerLink="baskets">Sepet</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" routerLink="register" *ngIf="!authService.isAuthenticated">Kayıt
                                     Ol</a>
                             </li>
@@ -32,7 +29,8 @@
                                     Yap</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" style="color:red; cursor : pointer;"  (click)="signOut()" *ngIf="authService.isAuthenticated">Çıkış Yap</a>
+                                <a class="nav-link" aria-current="page" style="color:red; cursor : pointer;"
+                                    (click)="signOut()" *ngIf="authService.isAuthenticated">Çıkış Yap</a>
                             </li>
                             <button class="btn btn-outline-success" type="submit" routerLink="admin/"
                                 *ngIf="authService.isAuthenticated">Admin</button>
@@ -53,8 +51,11 @@
                         </ul>
                         <!-- <form class="d-flex" role="search">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+
                         </form> -->
+                        <div class="d-flex">
+                            <button class="btn btn-outline-success"data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit">Sepet</button>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -74,3 +75,5 @@
 <ngx-spinner size="default" name="ballAtom" type="ball-atom"></ngx-spinner>
 <ngx-spinner size="default" name="ballScaleMultiple" type="ball-scale-multiple"></ngx-spinner>
 <ngx-spinner size="default" name="ballSpinClockwiseFadeRotating" type="ball-spin-clockwise-fade-rotating"></ngx-spinner>
+
+<app-baskets></app-baskets>
