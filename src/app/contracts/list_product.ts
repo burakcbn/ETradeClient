@@ -1,5 +1,5 @@
 export class ListProduct{
-    id:number
+    id:string
     productName:string
     stock:number
     price:number

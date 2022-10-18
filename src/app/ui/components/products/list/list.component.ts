@@ -1,16 +1,29 @@
+import { ToastrService } from 'ngx-toastr';
+import { CreateBasketItem } from './../../../../contracts/basket/create-basket-item';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { ListProduct } from 'src/app/contracts/list_product';
+import { BasketService } from 'src/app/sevices/common/models/basket.service';
 import { ProductService } from 'src/app/sevices/common/product.service';
+import { async } from 'rxjs';
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/sevices/ui/custom-toastr.service';
+import { MessageType } from '@microsoft/signalr';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent extends BaseComponent implements OnInit {
 
-  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    spinner: NgxSpinnerService,
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute,
+    private basketService: BasketService,
+    private toastrService: CustomToastrService) { super(spinner); }
 
   currentPageNo: number;
   totalProductCount: number;
@@ -53,4 +66,16 @@ export class ListComponent implements OnInit {
     })
   }
 
+  async addToBasketItem(product: ListProduct) {
+    this.show(SpinnerType.BallAtom);
+    let _basketItem: CreateBasketItem = new CreateBasketItem();
+    _basketItem.productId = product.id;
+    _basketItem.quantity = 1;
+    await this.basketService.add(_basketItem);
+    this.hide(SpinnerType.BallAtom);
+    this.toastrService.message("Ürün eklendi", "Başarıyla eklendi", {
+      messageType: ToastrMessageType.Success,
+      position: ToastrPosition.TopRight
+    });
+  }
 }
