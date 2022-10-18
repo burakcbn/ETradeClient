@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
 import { AuthService } from './sevices/common/auth.service';
+import { ComponentType, DynamicLoadComponentService } from './sevices/common/dynamic-load-component.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from './sevices/ui/custom-toastr.service';
 declare var $: any
 @Component({
@@ -10,8 +11,13 @@ declare var $: any
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  @ViewChild(DynamicLoadComponentDirective, { static: true })
+  dynamicLoadComponentDirective: DynamicLoadComponentDirective;
+
   title = 'ETradeClientRepeatAgain';
-  constructor(public authService: AuthService, private toastrService: CustomToastrService,private router:Router) {
+  constructor(public authService: AuthService, private toastrService: CustomToastrService,private router:Router,
+    private dynamicLoadComponentService:DynamicLoadComponentService) {
     authService.identityCheck();
   }
 
@@ -23,5 +29,8 @@ export class AppComponent {
       messageType:ToastrMessageType.Warning,
       position:ToastrPosition.TopRight
     })
+  }
+  loadComponent() {
+    this.dynamicLoadComponentService.loadComponent(ComponentType.BasketsComponent, this.dynamicLoadComponentDirective.viewContainerRef);
   }
 }
