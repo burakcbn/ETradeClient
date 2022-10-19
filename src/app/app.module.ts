@@ -28,15 +28,13 @@ import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-
     BrowserAnimationsModule,
     JwtModule.forRoot({
       config: {
-        //Bu alandaki tokenı alıp tum uygulamada kullanır 
         tokenGetter: () => localStorage.getItem("accessToken"),
-        //bu tokenı gondereceği adresi belirliyoruz
         allowedDomains: [("localhost:7299")]
       }
     })
   ],
   providers: [{ provide: "baseUrl", useValue: "https://localhost:7299/api", multi: true },
-  { provide: "baseSignalRUrl", useValue: "https://localhost:7299", multi: true },
+  { provide: "baseSignalRUrl", useValue: "https://localhost:7299/", multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandlerInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
