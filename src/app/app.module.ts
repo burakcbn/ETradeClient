@@ -27,16 +27,17 @@ import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     JwtModule.forRoot({
-      config:{
+      config: {
         //Bu alandaki tokenı alıp tum uygulamada kullanır 
-        tokenGetter:()=>localStorage.getItem("accessToken"),
+        tokenGetter: () => localStorage.getItem("accessToken"),
         //bu tokenı gondereceği adresi belirliyoruz
-        allowedDomains:[("localhost:7299")]
+        allowedDomains: [("localhost:7299")]
       }
     })
   ],
-  providers: [{provide:"baseUrl",useValue:"https://localhost:7299/api",multi:true},
-{provide:HTTP_INTERCEPTORS,useClass:HttpErrorHandlerInterceptorService,multi:true}],
+  providers: [{ provide: "baseUrl", useValue: "https://localhost:7299/api", multi: true },
+  { provide: "baseSignalRUrl", useValue: "https://localhost:7299", multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandlerInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

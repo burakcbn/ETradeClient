@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionState, HubConnectionBuilder } from '@microsoft/signalr';
 
 
@@ -7,7 +7,7 @@ import { HubConnection, HubConnectionState, HubConnectionBuilder } from '@micros
 })
 export class SignalRService {
 
-  constructor() { }
+  constructor(@Inject("baseSignalRUrl") private baseSignalRUrl: string) { }
 
   private _connection: HubConnection;
 
@@ -16,7 +16,7 @@ export class SignalRService {
   }
 
   start(hubUrl: string) {
-
+    hubUrl = this.baseSignalRUrl + hubUrl;
     if (!this.connection || this._connection?.state == HubConnectionState.Disconnected) {
 
       const builder: HubConnectionBuilder = new HubConnectionBuilder();
@@ -25,26 +25,26 @@ export class SignalRService {
         .build();
 
       hubConnection.start()
-        .then(() => {console.log("connected")})
+        .then(() => { console.log("connected") })
         .catch(error => setTimeout(() => this.start(hubUrl), 2000));
-    
-        this._connection = hubConnection;
-      }
-      
+
+      this._connection = hubConnection;
+    }
+
     this._connection.onreconnected(connectionId => console.log("Reconnected"));
     this._connection.onreconnecting(error => console.log("Reconnecting"));
     this._connection.onclose(error => console.log("Close reconnection"));
 
   }
 
-  invoke(procedureName: string,message:any,successCallBack?:(value)=>void,errorCallBack?:(error)=>void) {
-    this.connection.invoke(procedureName,message)
-    .then(successCallBack)
-    .catch(errorCallBack);
+  invoke(procedureName: string, message: any, successCallBack?: (value) => void, errorCallBack?: (error) => void) {
+    this.connection.invoke(procedureName, message)
+      .then(successCallBack)
+      .catch(errorCallBack);
 
   }
 
-  on(procedureName:string, callBack:(...message)=>void) {
-    this.connection.on(procedureName,callBack);
-   }
+  on(procedureName: string, callBack: (...message) => void) {
+    this.connection.on(procedureName, callBack);
+  }
 }

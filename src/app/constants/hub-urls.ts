@@ -1,3 +1,4 @@
 export enum HubUrls{
-    ProductHub="https://localhost:7299/api/products-hub"
+    ProductHub="products-hub",
+    OrderHub="orders-hub"
 }
