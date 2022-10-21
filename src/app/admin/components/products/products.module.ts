@@ -15,19 +15,19 @@ import { CreateComponent } from './create/create.component';
 import { ListComponent } from './list/list.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
-import {MatDialogModule} from '@angular/material/dialog';
+import { DeleteDirectiveModule } from 'src/app/directives/admin/delete.directive.module';
 @NgModule({
   declarations: [
     ProductsComponent,
     CreateComponent,
     ListComponent,    
-    DeleteDirective,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild([
       {path:"" ,component:ProductsComponent}
     ]),
+    DeleteDirectiveModule,
     MatSidenavModule,
     MatFormFieldModule,MatInputModule,MatButtonModule,MatPaginatorModule,MatTableModule,
     DialogModule,
