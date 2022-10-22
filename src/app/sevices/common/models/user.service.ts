@@ -12,7 +12,7 @@ import { TokenResponse } from 'src/app/contracts/token/tokenResponse';
 })
 export class UserService {
 
-  constructor(private httpClientService: HttpClientService,private toastrService:CustomToastrService) { }
+  constructor(private httpClientService: HttpClientService, private toastrService: CustomToastrService) { }
 
 
   async create(user: User): Promise<CreateUser> {
@@ -24,4 +24,20 @@ export class UserService {
     return await firstValueFrom(observable) as CreateUser;
   }
 
+  async updatePassword(userId: string, resetToken: string, password: string, passwordConfirm: string, successCallBack?: () => void, errorCallBack?: (error) => void) {
+    const observable: Observable<any> = this.httpClientService.post({
+      controller: "Users",
+      action: "update-password"
+    }, {
+      userId: userId,
+      resetToken: resetToken,
+      password: password,
+      passwordConfirm: passwordConfirm
+    });
+    const promiseData = firstValueFrom(observable);
+    promiseData
+      .then(() => successCallBack)
+      .catch(error => errorCallBack(error));
+    await promiseData;
+  }
 }
