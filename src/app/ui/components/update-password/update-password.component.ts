@@ -67,6 +67,7 @@ export class UpdatePasswordComponent extends BaseComponent implements OnInit {
           }, error => {
 
           });
+        this.hide(SpinnerType.BallAtom);
       }
     })
   }

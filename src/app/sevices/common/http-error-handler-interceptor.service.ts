@@ -41,33 +41,34 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
           });
           break;
         case HttpStatusCode.InternalServerError:
-          this.toastrService.message("Sunucuya erişilemiyor!", "Sunucu Hatası!", {
+          this.toastrService.message("Sunucuya erişilmiyor!", "Sunucu hatası!", {
             messageType: ToastrMessageType.Warning,
             position: ToastrPosition.BottomFullWidth
-          })
+          });
           break;
         case HttpStatusCode.BadRequest:
-          this.toastrService.message("Geçersiz istek yapıldı!", "Geçersiz İstek!", {
+          this.toastrService.message("Geçersiz istek yapıldı!", "Geçersiz istek!", {
             messageType: ToastrMessageType.Warning,
             position: ToastrPosition.BottomFullWidth
-          })
+          });
           break;
         case HttpStatusCode.NotFound:
-          this.toastrService.message("Sayfa bulunamadı!", "Sayfa Bulunumadı!", {
+          this.toastrService.message("Sayfa bulunamadı!", "Sayfa bulunamadı!", {
             messageType: ToastrMessageType.Warning,
             position: ToastrPosition.BottomFullWidth
-          })
+          });
           break;
         default:
-          this.toastrService.message("Beklenmeyen bir hata meydana geldi!", "Hata!", {
+          this.toastrService.message("Beklenmeyen bir hata meydana gelmiştir!", "Hata!", {
             messageType: ToastrMessageType.Warning,
             position: ToastrPosition.BottomFullWidth
-          })
+          });
           break;
       }
+
       this.spinner.hide(SpinnerType.BallAtom);
       return of(error);
-    }))
+    }));
 
   }
 }

@@ -25,13 +25,12 @@ export class ListComponent extends BaseComponent implements OnInit {
     super(spinner)
   }
 
-  displayedColumns: string[] = ['orderCode', 'userName', 'totalPrice', 'createdDate','viewDetail','delete'];
+  displayedColumns: string[] = ['orderCode', 'userName', 'totalPrice', 'createdDate','viewDetail','completed','delete'];
   dataSource: MatTableDataSource<ListOrder> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   async getOrders() {
     this.show(SpinnerType.BallAtom);
-
     const allOrders: { count: number; orders: ListOrder[] } = await this.orderService.getAllOrders(this.paginator ? this.paginator.pageIndex : 0, this.paginator ? this.paginator.pageSize : 5, () => this.hide(SpinnerType.BallAtom), errorMessage => this.alertifyService.message(errorMessage, {
       dismissOthers: true,
       messageType: MessageType.Error,
@@ -48,10 +47,10 @@ export class ListComponent extends BaseComponent implements OnInit {
   async ngOnInit() {
     await this.getOrders();
   }
-  showDetail(id:string){
+  showDetail(id:string,completed:boolean){
     this.dialogService.openDialog({
       componentType:OrderDetailDialogComponent,
-      data:id,
+      data:{id,completed},
       options:{witdh:"750px"},
       afterClosed:()=>{
 
