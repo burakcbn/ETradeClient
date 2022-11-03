@@ -1,6 +1,6 @@
-<mat-drawer-container class="products-sidenav">
+<mat-drawer-container class="roles-sidenav">
   <mat-drawer mode="side" opened>
-    <app-create></app-create>
+    <app-create (createdRole)="createdRole($event)"></app-create>
   </mat-drawer>
   <mat-drawer-content>
     <app-list></app-list>

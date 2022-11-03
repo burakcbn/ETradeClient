@@ -52,8 +52,7 @@ export class OrderService {
     }, id);
 
     const promiseData = firstValueFrom(observable);
-    promiseData
-      .then(value => successCallBack())
+    promiseData.then(value => successCallBack())
       .catch(error => errorCallBack(error));
     await promiseData;
   }
