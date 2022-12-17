@@ -46,7 +46,7 @@ export class DeleteDirective {
             opacity: 0,
             left: "+=50",
             height: "toogle",
-          }, 700, () => {
+          }, 500, () => {
             this.callBack.emit();
             this.alertifyService.message("Silme işlemi gerçekleştirildi",{messageType:MessageType.Success});
           })

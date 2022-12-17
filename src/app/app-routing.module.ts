@@ -16,6 +16,10 @@ const routes: Routes = [
           then(module => module.CustomersModule), canActivate: [AuthGuard]
       },
       {
+        path: "users", loadChildren: () => import("./admin/components/user/user.module").
+          then(module => module.UserModule), canActivate: [AuthGuard]
+      },
+      {
         path: "products", loadChildren: () => import("./admin/components/products/products.module").
           then(module => module.ProductsModule), canActivate: [AuthGuard]
       },
@@ -56,8 +60,8 @@ const routes: Routes = [
       then(module => module.PasswordResetModule)
   },
   {
-    path:"update-password/:userId/:resetToken",loadChildren:()=>import ("./ui/components/update-password/update-password.module").
-    then(module=>module.UpdatePasswordModule)
+    path: "update-password/:userId/:resetToken", loadChildren: () => import("./ui/components/update-password/update-password.module").
+      then(module => module.UpdatePasswordModule)
   }
 ];
 

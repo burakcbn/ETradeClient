@@ -1,4 +1,4 @@
-<h1 mat-dialog-title matBadge="{{rolesComponent.selectedOptions.selected.length}}/{{roles.count}}" matBadgeOverlap="false">{{data.name}} Endpoint'ine Rol Atama</h1>
+<h1 mat-dialog-title matBadge="{{rolesComponent.selectedOptions.selected.length}}/{{roles.count}}" matBadgeOverlap="false">Kullanıcıya Rol Atama</h1>
 <div mat-dialog-content>
   <p>İlgili sayfaya aşağıdan rolleri atayabilirsiniz.</p>
 </div>
@@ -13,7 +13,7 @@
 
 
 <div></div>
-<div mat-dialog-actions>
+<div mat-dialog-actions style="float: right;">
   <button mat-button (click)="closeDialog()">İptal</button>
   <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="assignRoles(rolesComponent)">Rolleri Ata</button>
 </div>

@@ -2,7 +2,7 @@ import { FileUploadOptions } from './../../../../sevices/common/file-upload/file
 import { AlertifyOptions } from './../../../../sevices/admin/alertify.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductService } from './../../../../sevices/common/product.service';
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CreateProduct } from 'src/app/contracts/create-product';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { AlertifyService, MessageType, Position } from 'src/app/sevices/admin/alertify.service';
@@ -18,16 +18,19 @@ export class CreateComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  create(productName:HTMLInputElement,stock: HTMLInputElement, price: HTMLInputElement) {
+  @Output() createdProduct: EventEmitter<string> = new EventEmitter();
+
+  create(productName: HTMLInputElement, stock: HTMLInputElement, price: HTMLInputElement) {
     this.show(SpinnerType.BallSpinClockwiseFadeRotating);
     const createProduct: CreateProduct = new CreateProduct();
-    createProduct.productName =productName.value;
+    createProduct.productName = productName.value;
     createProduct.stock = parseInt(stock.value);
     createProduct.price = parseFloat(price.value);
 
     this.productsService.create(createProduct, () => {
       this.hide(SpinnerType.BallSpinClockwiseFadeRotating);
       this.alertify.message("Urun eklendi", { messageType: MessageType.Success, dismissOthers: true, position: Position.Top_Right });
+      this.createdProduct.emit(productName.value);
     }, (errorMessage) => {
       this.alertify.message(errorMessage, {
         dismissOthers: true,

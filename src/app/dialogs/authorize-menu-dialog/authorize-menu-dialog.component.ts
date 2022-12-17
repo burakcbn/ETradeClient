@@ -16,32 +16,39 @@ import { MatSelectionList } from '@angular/material/list';
 })
 export class AuthorizeMenuDialogComponent extends BaseDialog<AuthorizeMenuDialogComponent> implements OnInit {
 
-  roles: { count: number, roles: ListRole[] };
 
-  constructor(dialogRef: MatDialogRef<AuthorizeMenuDialogComponent>,
+  constructor(
+    dialogRef: MatDialogRef<AuthorizeMenuDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private roleService: RoleService,
     private spinner: NgxSpinnerService,
     private authorizationEndpointService: AuthorizationEndpointService) {
     super(dialogRef);
-
   }
 
+  roles: { count: number, roles: ListRole[] };
+
+  assignedRoles: Array<string>;
+  listRoles: { name: string, selected: boolean }[];
   async ngOnInit() {
-    this.spinner.show(SpinnerType.BallAtom);
-    this.roles = await this.roleService.getRoles(-1, -1, () => this.spinner.hide(SpinnerType.BallAtom));
+    this.assignedRoles = await this.authorizationEndpointService.getRolesToEndpoint(this.data.code, this.data.menuName);
+    this.roles = await this.roleService.getRoles(-1, -1);
+
+    this.listRoles = this.roles.roles.map((r: any) => {
+      return {
+        name: r.name,
+        selected: this.assignedRoles?.indexOf(r.name) > -1
+      }
+    });
   }
+  // async ngOnInit() {
+  //   this.spinner.show(SpinnerType.BallAtom);
+  //   this.roles = await this.roleService.getRoles(-1, -1, () => this.spinner.hide(SpinnerType.BallAtom));
+  // }
 
-  assignRole(rolesComponent: MatSelectionList) {
-    this.spinner.show(SpinnerType.BallAtom)
+  assignRoles(rolesComponent: MatSelectionList) {
     const roles: string[] = rolesComponent.selectedOptions.selected.map(o => o._text.nativeElement.innerText);
-    this.authorizationEndpointService.assignRoleEndpoint(roles, this.data.code as string, this.data.name as string,
-      () => {
-        this.spinner.hide(SpinnerType.BallAtom);
-      },
-      (error) => {
-
-      })
+    this.authorizationEndpointService.assignRoleEndpoint(roles, this.data.code as string, this.data.menuName as string, () => this.spinner.hide(SpinnerType.BallAtom))
 
   }
 }

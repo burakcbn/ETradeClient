@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-3"></div>
-  <div class="col-md-6">
-    <form [formGroup]="frm" (ngSubmit)="onSubmit(frm.value)">
+  <div class="col-md-6 ">
+    <form [formGroup]="frm" (ngSubmit)="onSubmit(frm.value)" >
       <div class="form-group">
         <label for="nameSurname">Ad Soyad</label>
         <input type="text" formControlName="nameSurname" class="form-control" id="nameSurname" placeholder="Ad Soyad" [ngClass]="{'is-invalid': submitted && component.nameSurname.errors}">

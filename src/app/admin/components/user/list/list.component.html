@@ -1,0 +1,57 @@
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" >
+        <!-- Position Column -->
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef>User Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="nameSurname">
+            <th mat-header-cell *matHeaderCellDef>Name Surname </th>
+            <td mat-cell *matCellDef="let element"> {{element.nameSurname}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="completed">
+            <th mat-header-cell *matHeaderCellDef>Completed </th>
+            <td mat-cell *matCellDef="let element"><img *ngIf="element.completed" src="../../../../../assets/complete.png" width="25" height="25">
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="twoFactorEnabled">
+            <th mat-header-cell *matHeaderCellDef>TwoFactorEnabled </th>
+            <td mat-cell *matCellDef="let element"> <img [src]="element.twoFactorEnabled ? '../../../../../assets/active.png':'../../../../../assets/passive.png'" class="img-active"  alt=""></td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element"> <button mat-button color="primary"(click)="assignRole(element.id)" >Rol Ata</button></td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Delete</th>
+            <td 
+            appDelete
+            [id]="element.id"
+            controller="Users"
+            (callBack)="getUsers()"    
+            mat-cell *matCellDef="let element">
+         </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator (page)="pageChanged()" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+        aria-label="Select page of periodic elements">
+    </mat-paginator>
+</div>

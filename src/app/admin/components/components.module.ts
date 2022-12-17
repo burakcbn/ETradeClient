@@ -1,3 +1,4 @@
+import { UserModule } from './user/user.module';
 import { OrdersModule } from './orders/orders.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { NgModule } from '@angular/core';
@@ -18,7 +19,8 @@ import { RoleModule } from './role/role.module';
     ProductsModule,
     OrdersModule,
     AuthorizeMenuModule,
-    RoleModule
+    RoleModule,
+    UserModule
   ],
   exports:[
     
