@@ -9,6 +9,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { delay } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
+import { QrcodeDialogComponent } from 'src/app/dialogs/qrcode-dialog/qrcode-dialog.component';
 declare var $: any;
 @Component({
   selector: 'app-list',
@@ -17,7 +18,7 @@ declare var $: any;
 })
 export class ListComponent extends BaseComponent implements OnInit {
 
-  displayedColumns: string[] = ['productName','stock', 'price', 'createdDate', 'updateDate', 'photos', 'edit', 'delete'];
+  displayedColumns: string[] = ['productName', 'stock', 'price', 'createdDate', 'updateDate', 'photos', 'qrcode', 'edit', 'delete'];
   dataSource: MatTableDataSource<ListProduct> = (null);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -55,6 +56,15 @@ export class ListComponent extends BaseComponent implements OnInit {
         witdh: "1400 px",
       }
     })
+  }
+
+  showQRCode(productId: string) {
+    this.show(SpinnerType.BallAtom);
+    this.dialogService.openDialog({
+      componentType: QrcodeDialogComponent,
+      data: productId,
+    })
+    this.hide(SpinnerType.BallAtom);
   }
   // delete(id, event) {
   //   const element: HTMLImageElement = event.srcElement;

@@ -34,7 +34,7 @@ export class ListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(async params => {
-
+      
       this.currentPageNo = parseInt(params["pageNo"] ?? 1);
       const data: { count: number, products: ListProduct[] } = await this.productService.read(this.currentPageNo - 1, this.pageSize,
         () => {

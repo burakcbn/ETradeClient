@@ -17,8 +17,8 @@ export class HttpClientService {
     if (requestParameters.fullEndPoint)
       url = requestParameters.fullEndPoint;
     else
-    url =`${this.url(requestParameters).trim()}${id?`/${id}`:""}${requestParameters.queryString?`?${requestParameters.queryString}`:""}`;
-    return this.httpClient.get<T>(url, { headers: requestParameters.headers });
+    url =`${this.url(requestParameters).trim()}${id?`/${id}`:""}${requestParameters.queryString?`?${requestParameters.queryString}`:""}`;  
+    return this.httpClient.get<T>(url,{ headers: requestParameters.headers ,responseType:requestParameters.responseType as 'json'});
   }
 
   post<T>(requestParameters: RequestParameters, body: Partial<T>): Observable<T> {
@@ -27,7 +27,7 @@ export class HttpClientService {
       url = requestParameters.fullEndPoint;
     else
       url =` ${this.url(requestParameters)}${requestParameters.queryString?`?${requestParameters.queryString}`:""}`;
-    return this.httpClient.post<T>(url, body, { headers: requestParameters.headers });
+    return this.httpClient.post<T>(url, body, { headers: requestParameters.headers ,responseType:requestParameters.responseType as 'json'});
   }
 
   put<T>(requestParameters: RequestParameters, body: Partial<T>): Observable<T> {
@@ -36,7 +36,7 @@ export class HttpClientService {
       url = requestParameters.fullEndPoint
     else
       url = ` ${this.url(requestParameters)}${requestParameters.queryString?`?${requestParameters.queryString}`:""}`;
-    return this.httpClient.put<T>(url, body, { headers: requestParameters.headers });
+    return this.httpClient.put<T>(url, body, { headers: requestParameters.headers,responseType:requestParameters.responseType as 'json' });
   }
   delete<T>(requestParameters: RequestParameters, id: string):Observable<T> {
     let url: string = "";
@@ -44,7 +44,7 @@ export class HttpClientService {
       url = requestParameters.fullEndPoint;
     else
       url =`${this.url(requestParameters).trim()}/${id}${requestParameters.queryString?`?${requestParameters.queryString}`:""}`;
-    return this.httpClient.delete<T>(url, { headers: requestParameters.headers });
+    return this.httpClient.delete<T>(url, { headers: requestParameters.headers ,responseType:requestParameters.responseType as 'json'});
   }
 
 }
@@ -55,4 +55,5 @@ export class RequestParameters {
   fullEndPoint?: string;
   headers?: HttpHeaders;
   baseUrl?: string;
+  responseType?:string='json'
 }

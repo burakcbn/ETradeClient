@@ -27,7 +27,6 @@ export class ProductService {
         errorCallBack(message);
     });
   }
-
   async read(page: number = 0, size: number = 5, successCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ count: number, products: ListProduct[] }> {
     const promiseData: Promise<{ count: number, products: ListProduct[] }> = this.httpClientService.get<{ count: number, products: ListProduct[] }>({
       controller: "Products",
@@ -45,4 +44,14 @@ export class ProductService {
     }, id);
     await firstValueFrom(deleteObservable);
   }
+  async updateQRCode(productId: string, stock: number) {
+
+    const observable = this.httpClientService.put({
+      controller: "Products",
+      action: "qrcode-stock-update"
+    }, { productId: productId, stock: stock });
+
+    await firstValueFrom(observable)
+  }
+
 }

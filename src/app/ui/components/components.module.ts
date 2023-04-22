@@ -1,3 +1,4 @@
+import { CategoriesModule } from './categories/categories.module';
 import { PasswordResetModule } from './password-reset/password-reset.module';
 import { UpdatePasswordModule } from './update-password/update-password.module';
 import { ProductsModule } from './../../admin/components/products/products.module';
@@ -23,7 +24,8 @@ import { LoginModule } from './login/login.module';
     RegisterModule,
     LoginModule,
     UpdatePasswordModule,
-    PasswordResetModule
+    PasswordResetModule,
+    CategoriesModule
   ],
   exports:[
     BasketsModule

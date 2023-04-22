@@ -1,0 +1,15 @@
+<section class="example-section">
+    <span class="example-list-section">
+            {{task.name}}
+    </span>
+    <span class="example-list-section">
+        <ul>
+            <li *ngFor="let subtask of task.subtasks">
+                <mat-checkbox [(ngModel)]="subtask.completed" [color]="color"y
+                    (ngModelChange)="updateAllComplete(subtask.category)">
+                    {{subtask.category.categoryName}}
+                </mat-checkbox>
+            </li>
+        </ul>
+    </span>
+</section>

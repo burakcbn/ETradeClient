@@ -1,3 +1,5 @@
+import { ListCategory } from 'src/app/contracts/category/list-category';
+import { CategoryService } from './../../../../sevices/common/models/category.service';
 import { FileUploadOptions } from './../../../../sevices/common/file-upload/file-upload.component';
 import { AlertifyOptions } from './../../../../sevices/admin/alertify.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -14,28 +16,47 @@ import { AlertifyService, MessageType, Position } from 'src/app/sevices/admin/al
 })
 export class CreateComponent extends BaseComponent implements OnInit {
 
-  constructor(private productsService: ProductService, private ngxSpinner: NgxSpinnerService, private alertify: AlertifyService) { super(ngxSpinner); }
+  constructor(private productsService: ProductService,
+    private ngxSpinner: NgxSpinnerService,
+    private alertify: AlertifyService,
+    private categoryService: CategoryService) { super(ngxSpinner); }
 
-  ngOnInit(): void {
-  }
   @Output() createdProduct: EventEmitter<string> = new EventEmitter();
+  categories: ListCategory;
 
-  create(productName: HTMLInputElement, stock: HTMLInputElement, price: HTMLInputElement) {
+
+  async ngOnInit() {
+    this.categories = await this.categoryService.getAllCategory();
+
+  }
+
+
+
+
+
+  create(productName: HTMLInputElement, stock: HTMLInputElement, price: HTMLInputElement,categoryId:string) {
     this.show(SpinnerType.BallSpinClockwiseFadeRotating);
     const createProduct: CreateProduct = new CreateProduct();
+    createProduct.categoryId=categoryId;
     createProduct.productName = productName.value;
     createProduct.stock = parseInt(stock.value);
     createProduct.price = parseFloat(price.value);
+
+    
 
     this.productsService.create(createProduct, () => {
       this.hide(SpinnerType.BallSpinClockwiseFadeRotating);
       this.alertify.message("Urun eklendi", { messageType: MessageType.Success, dismissOthers: true, position: Position.Top_Right });
       this.createdProduct.emit(productName.value);
     }, (errorMessage) => {
+      this.hide(SpinnerType.BallSpinClockwiseFadeRotating);
       this.alertify.message(errorMessage, {
         dismissOthers: true,
         messageType: MessageType.Error
       });
     })
   }
+
+
+
 }

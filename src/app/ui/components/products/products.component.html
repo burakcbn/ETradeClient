@@ -1,1 +1,21 @@
-<app-list></app-list>
+<div class=" row">
+    <div class="col-md-2"><app-categories ></app-categories>
+
+        <section class="example-section">
+            <span class="example-list-section">
+                    {{task.name}}
+            </span>
+            <span class="example-list-section">
+                <ul>
+                    <li *ngFor="let subtask of task.subtasks"#subtask>
+                        <mat-checkbox [(ngModel)]="subtask.completed" [color]="subtask.color"
+                            (ngModelChange)="updateAllComplete(subtask)">
+                            {{subtask.name}}
+                        </mat-checkbox>
+                    </li>
+                </ul>
+            </span>
+        </section>
+    </div>
+    <div class="col-md-10"><app-list></app-list></div>
+</div>

@@ -16,6 +16,7 @@ import { ListComponent } from './list/list.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import { DeleteDirectiveModule } from 'src/app/directives/admin/delete.directive.module';
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [
     ProductsComponent,
@@ -29,7 +30,7 @@ import { DeleteDirectiveModule } from 'src/app/directives/admin/delete.directive
     ]),
     DeleteDirectiveModule,
     MatSidenavModule,
-    MatFormFieldModule,MatInputModule,MatButtonModule,MatPaginatorModule,MatTableModule,
+    MatFormFieldModule,MatInputModule,MatButtonModule,MatPaginatorModule,MatTableModule,MatSelectModule,
     DialogModule,
     FileUploadModule
   ]

@@ -1,3 +1,4 @@
+import { HttpClientService } from 'src/app/sevices/common/http-client.service';
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
@@ -10,10 +11,11 @@ import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 export class HomeComponent extends BaseComponent implements OnInit {
 
  
-  constructor(spinner:NgxSpinnerService) {super(spinner); }
+  constructor(spinner:NgxSpinnerService,private httpClientService:HttpClientService) {super(spinner); }
 
 
   ngOnInit(): void {
+  
   }
 
 }
